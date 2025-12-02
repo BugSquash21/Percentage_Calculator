@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Percentage Calculator with Custom Icons & Animations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            animation: fadeIn 1s ease-in;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .calculator {
+            margin-bottom: 20px;
+        }
+        input, select, button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+            margin-top: 20px;
+        }
+        .customization {
+            margin-top: 30px;
+            border-top: 1px solid #ccc;
+            padding-top: 20px;
+        }
+        .icon {
+            font-size: 2em;
+            display: inline-block;
+            margin: 10px;
+            transition: transform 0.3s;
+        }
+        .icon.spin { animation: spin 2s linear infinite; }
+        .icon.bounce { animation: bounce 1s infinite; }
+        .icon.fade { animation: fadeIn 2s ease-in; }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        .preview {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Percentage Calculator</h1>
+        <div class="calculator">
+            <select id="calcType">
+                <option value="percentOf">What is X% of Y?</option>
+                <option value="whatPercent">What percentage is X of Y?</option>
+            </select>
+            <input type="number" id="value1" placeholder="Enter X" step="0.01">
+            <input type="number" id="value2" placeholder="Enter Y" step="0.01">
+            <button onclick="calculate()">Calculate</button>
+            <div class="result" id="result"></div>
+        </div>
+        
+        <div class="customization">
+            <h2>Customize Icons & Animations</h2>
+            <label for="iconSelect">Choose Icon:</label>
+            <select id="iconSelect">
+                <option value="&#128202;">Calculator</option>
+                <option value="&#37;">Percent</option>
+                <option value="&#128176;">Money</option>
+                <option value="&#128200;">Chart</option>
+            </select>
+            <label for="colorSelect">Icon Color:</label>
+            <select id="colorSelect">
+                <option value="#333">Black</option>
+                <option value="#4CAF50">Green</option>
+                <option value="#2196F3">Blue</option>
+                <option value="#FF5722">Red</option>
+            </select>
+            <label for="sizeSelect">Icon Size:</label>
+            <select id="sizeSelect">
+                <option value="2em">Small</option>
+                <option value="3em">Medium</option>
+                <option value="4em">Large</option>
+            </select>
+            <label for="animSelect">Animation:</label>
+            <select id="animSelect">
+                <option value="">None</option>
+                <option value="spin">Spin</option>
+                <option value="bounce">Bounce</option>
+                <option value="fade">Fade In</option>
+            </select>
+            <button onclick="applyCustomization()">Apply Customization</button>
+            <div class="preview">
+                <span class="icon" id="previewIcon">&#128202;</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculate() {
+            const type = document.getElementById('calcType').value;
+            const val1 = parseFloat(document.getElementById('value1').value);
+            const val2 = parseFloat(document.getElementById('value2').value);
+            let result = '';
+            
+            if (isNaN(val1) || isNaN(val2)) {
+                result = 'Please enter valid numbers.';
+            } else if (type === 'percentOf') {
+                result = ${val1}% of ${val2} is ${(val1 / 100) * val2}.;
+            } else if (type === 'whatPercent') {
+                result = ${val1} is ${(val1 / val2 * 100).toFixed(2)}% of ${val2}.;
+            }
+            
+            document.getElementById('result').textContent = result;
+        }
+        
+        function applyCustomization() {
+            const icon = document.getElementById('iconSelect').value;
+            const color = document.getElementById('colorSelect').value;
+            const size = document.getElementById('sizeSelect').value;
+            const anim = document.getElementById('animSelect').value;
+            
+            const previewIcon = document.getElementById('previewIcon');
+            previewIcon.innerHTML = icon;
+            previewIcon.style.color = color;
+            previewIcon.style.fontSize = size;
+            previewIcon.className = 'icon ' + anim;
+        }
+    </script>
+</body>
+</html>
